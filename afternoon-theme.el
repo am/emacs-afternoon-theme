@@ -38,6 +38,17 @@
 ;; Based on Steve Purcell's "color-theme-sanityinc-tomorrow" theme.
 ;; https://github.com/purcell/color-theme-sanityinc-tomorrow/
 
+;; Modified to use Base16 colors
+;; Base16 - http://chriskempson.github.io/base16/
+;; #151515  #ac4142
+;; #202020  #d28445
+;; #303030  #f4bf75
+;; #505050  #90a959
+;; #b0b0b0  #75b5aa
+;; #d0d0d0  #6a9fb5
+;; #e0e0e0  #aa759f
+;; #f5f5f5
+
 ;;; Code:
 
 (deftheme afternoon
@@ -46,19 +57,27 @@
 (let* ((class '((class color) (min-colors 89)))
        (256color (eq (display-color-cells (selected-frame)) 256))
 
-       (background (if 256color "#1c1c1c" "#181a26"))
-       (current-line (if 256color "#121212" "#14151E"))
-       (block-background (if 256color "#262626" "#1F2232"))
-       (selection "#103050")
-       (foreground "#eaeaea")
-       (comment "#969896")
-       (red "#d54e53")
-       (orange "goldenrod")
-       (yellow "#e7c547")
-       (green "DarkOliveGreen3")
-       (aqua "#70c0b1")
-       (blue "DeepSkyBlue1")
-       (purple "#c397d8"))
+       (black "#151515")
+       (bw02 "#202020")
+       (bw03 "#303030")
+       (bw04 "#505050")
+       (bw05 "#b0b0b0")
+       (bw06 "#d0d0d0")
+       (bw07 "#e0e0e0")
+       (white "#f5f5f5")
+       (red "#ac4142")
+       (orange "#d28445")
+       (yellow "#f4bf75")
+       (green "#90a959")
+       (aqua "#75b5aa")
+       (blue "#6a9fb5")
+       (purple "#aa759f")
+       (background (if 256color "#1c1c1c" bw02))
+       (current-line (if 256color "#121212" black))
+       (block-background (if 256color "#262626" black))
+       (selection bw05)
+       (foreground bw07)
+       (comment bw05))
 
   (custom-theme-set-faces
    'afternoon
@@ -67,7 +86,7 @@
    `(bold-italic ((,class (:slant italic :weight bold))))
    `(underline ((,class (:underline t))))
    `(italic ((,class (:slant italic))))
-   `(font-lock-builtin-face ((,class (:foreground "LightCoral"))))
+   `(font-lock-builtin-face ((,class (:foreground ,purple))))
    `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
    `(font-lock-comment-face ((,class (:foreground ,comment))))
    `(font-lock-constant-face ((,class (:foreground ,green))))
@@ -76,15 +95,15 @@
    `(font-lock-function-name-face ((,class (:foreground ,orange))))
    `(font-lock-keyword-face ((,class (:foreground ,blue))))
    `(font-lock-negation-char-face ((,class (:foreground ,blue))))
-   `(font-lock-preprocessor-face ((,class (:foreground "gold"))))
+   `(font-lock-preprocessor-face ((,class (:foreground ,orange))))
    `(font-lock-regexp-grouping-backslash ((,class (:foreground ,yellow))))
    `(font-lock-regexp-grouping-construct ((,class (:foreground ,purple))))
    `(font-lock-string-face ((,class (:foreground "burlywood"))))
-   `(font-lock-type-face ((,class (:foreground "CadetBlue1"))))
+   `(font-lock-type-face ((,class (:foreground ,blue))))
    `(font-lock-variable-name-face ((,class (:foreground ,yellow))))
    `(font-lock-warning-face ((,class (:weight bold :foreground ,red))))
    `(shadow ((,class (:foreground ,comment))))
-   `(success ((,class (:foreground "SeaGreen2"))))
+   `(success ((,class (:foreground ,aqua))))
    `(error ((,class (:foreground ,red))))
    `(warning ((,class (:foreground ,orange))))
 
@@ -159,22 +178,20 @@
 
    ;; Emacs interface
    `(cursor ((,class (:background ,orange))))
-   `(fringe ((,class (:background ,current-line))))
-   `(linum ((,class (:background ,current-line :foreground ,green))))
+   `(fringe ((,class (:background ,background))))
+   `(linum ((,class (:background ,background :foreground ,bw04))))
    `(border ((,class (:background ,current-line))))
    `(border-glyph ((,class (nil))))
    `(highlight ((,class (:inverse-video nil :background ,current-line))))
    `(gui-element ((,class (:background ,current-line :foreground ,foreground))))
-   `(mode-line ((,class (:foreground nil :background ,current-line
-                                     :box (:line-width 1 :color ,foreground)
-                                     :family "Lucida Grande"))))
-   `(mode-line-buffer-id ((,class (:foreground ,purple :background nil))))
-   `(mode-line-inactive ((,class (:inherit mode-line
-                                           :foreground ,comment
-                                           :background ,current-line :weight normal
-                                           :box (:line-width 1 :color ,foreground)))))
-   `(mode-line-emphasis ((,class (:foreground ,foreground :slant italic))))
-   `(mode-line-highlight ((,class (:foreground ,purple :box nil))))
+   ;; TODO theme mode-line powerline way
+   ;; `(mode-line ((,class (:foreground ,bw02 :background ,yellow ))))
+   ;; `(mode-line-buffer-id ((,class (:foreground ,red :weight bold :background nil))))
+   ;; `(mode-line-inactive ((,class (:inherit mode-line
+   ;;                                         :foreground ,bw05
+   ;;                                         :background ,bw03 :weight normal))))
+   ;; `(mode-line-emphasis ((,class (:foreground ,foreground :slant italic))))
+   ;; `(mode-line-highlight ((,class (:foreground ,purple :box nil))))
    `(minibuffer-prompt ((,class (:foreground ,blue))))
    `(region ((,class (:background ,selection))))
    `(secondary-selection ((,class (:background ,current-line))))
@@ -194,8 +211,8 @@
    `(whitespace-hspace ((,class (:background nil :foreground ,selection))))
 
    ;; Parenthesis matching (built-in)
-   `(show-paren-match-face ((,class (:background "dodgerblue1" :foreground "white"))))
-   `(show-paren-mismatch-face ((,class (:background "red1" :foreground "white"))))
+   `(show-paren-match-face ((,class (:background ,blue :foreground ,black))))
+   `(show-paren-mismatch-face ((,class (:background ,red :foreground ,white))))
 
    ;; Smartparens paren matching
    `(sp-show-pair-match-face ((,class (:foreground nil :background nil :inherit show-paren-match))))
@@ -207,7 +224,7 @@
    `(paren-face-no-match ((,class (:foreground nil :background nil :inherit show-paren-mismatch))))
 
    ;; Parenthesis dimming (parenface)
-   `(paren-face ((,class (:foreground ,comment :background nil))))
+   `(paren-face ((,class (:foreground ,black :background nil))))
 
    `(sh-heredoc ((,class (:foreground nil :inherit font-lock-string-face :weight normal))))
    `(sh-quoted-exec ((,class (:foreground nil :inherit font-lock-preprocessor-face))))
@@ -381,6 +398,7 @@
 
    ;; coffee-mode
    `(coffee-mode-class-name ((,class (:foreground ,orange :weight bold))))
+   `(coffee-mode-variable-name ((,class (:foreground , blue))))
    `(coffee-mode-function-param ((,class (:foreground ,purple))))
 
    ;; nxml
