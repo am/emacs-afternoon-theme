@@ -57,23 +57,25 @@
 (let* ((class '((class color) (min-colors 89)))
        (256color (eq (display-color-cells (selected-frame)) 256))
 
-       (black "#151515")
-       (bw02 "#202020")
-       (bw03 "#303030")
-       (bw04 "#505050")
-       (bw05 "#b0b0b0")
-       (bw06 "#d0d0d0")
-       (bw07 "#e0e0e0")
-       (white "#f5f5f5")
-       (red "#ac4142")
-       (orange "#d28445")
-       (yellow "#f4bf75")
-       (green "#90a959")
-       (aqua "#75b5aa")
-       (blue "#6a9fb5")
-       (purple "#aa759f")
-       (background (if 256color "#1c1c1c" bw02))
-       (current-line (if 256color "#121212" black))
+       (black "#2d2d2d")
+       (bw02 "#393939")
+       (bw03 "#515151")
+       (bw04 "#747369")
+       (bw05 "#a09f93")
+       (bw06 "#d3d0c8")
+       (bw07 "#e8e6df")
+       (white "#f2f0ec")
+       (red "#f2777a")
+       (orange "#f99157")
+       (yellow "#ffcc66")
+       (green "#99cc99")
+       (aqua "#66cccc")
+       (aqua-bright "#75DEE3")
+       (blue "#6699cc")
+       (purple "#cc99cc")
+       (brown "#d27b53")
+       (background "#2d2d2d")
+       (current-line "#393939")
        (block-background (if 256color "#262626" black))
        (selection bw05)
        (foreground bw07)
@@ -81,7 +83,7 @@
 
   (custom-theme-set-faces
    'afternoon
-   `(default ((,class (:foreground ,foreground :background ,background))))
+   `(default ((,class (:foreground ,foreground :background ,black))))
    `(bold ((,class (:weight bold))))
    `(bold-italic ((,class (:slant italic :weight bold))))
    `(underline ((,class (:underline t))))
@@ -112,8 +114,8 @@
    `(flycheck-warning ((,class (:underline (:style wave :color ,orange)))))
 
    ;; Flymake
-   `(flymake-warnline ((,class (:underline (:style wave :color ,orange) :background ,background))))
-   `(flymake-errline ((,class (:underline (:style wave :color ,red) :background ,background))))
+   `(flymake-warnline ((,class (:underline (:style wave :color ,orange) :background ,black))))
+   `(flymake-errline ((,class (:underline (:style wave :color ,red) :background ,black))))
 
    ;; Clojure errors
    `(clojure-test-failure-face ((,class (:background nil :inherit flymake-warnline))))
@@ -121,9 +123,9 @@
    `(clojure-test-success-face ((,class (:background nil :foreground nil :underline ,green))))
 
    ;; EDTS errors
-   `(edts-face-warning-line ((t (:background nil :inherit flymake-warnline))))
+   `(edts-face-warning-line ((,class (:background nil :inherit flymake-warnline))))
    `(edts-face-warning-mode-line ((,class (:background nil :foreground ,orange :weight bold))))
-   `(edts-face-error-line ((t (:background nil :inherit flymake-errline))))
+   `(edts-face-error-line ((,class (:background nil :inherit flymake-errline))))
    `(edts-face-error-mode-line ((,class (:background nil :foreground ,red :weight bold))))
 
    ;; For Brian Carper's extended clojure syntax table
@@ -153,10 +155,10 @@
    `(mmm-output-submode-face ((,class (:background ,current-line))))
 
    ;; Search
-   `(match ((,class (:foreground ,blue :background ,background :inverse-video t))))
-   `(isearch ((,class (:foreground ,yellow :background ,background :inverse-video t))))
-   `(isearch-lazy-highlight-face ((,class (:foreground ,aqua :background ,background :inverse-video t))))
-   `(isearch-fail ((,class (:background ,background :inherit font-lock-warning-face :inverse-video t))))
+   `(match ((,class (:foreground ,blue :background ,black :inverse-video t))))
+   `(isearch ((,class (:foreground ,yellow :background ,black :inverse-video t))))
+   `(isearch-lazy-highlight-face ((,class (:foreground ,aqua :background ,black :inverse-video t))))
+   `(isearch-fail ((,class (:background ,black :inherit font-lock-warning-face :inverse-video t))))
 
    ;; Anzu
    `(anzu-mode-line ((,class (:foreground ,orange))))
@@ -167,7 +169,7 @@
    `(ido-subdir ((,class (:foreground ,purple))))
    `(ido-first-match ((,class (:foreground ,orange))))
    `(ido-only-match ((,class (:foreground ,green))))
-   `(ido-indicator ((,class (:foreground ,red :background ,background))))
+   `(ido-indicator ((,class (:foreground ,red :background ,black))))
    `(ido-virtual ((,class (:foreground ,comment))))
 
    ;; flx-ido
@@ -177,21 +179,22 @@
    `(which-func ((,class (:foreground ,blue :background nil))))
 
    ;; Emacs interface
-   `(cursor ((,class (:background ,orange))))
-   `(fringe ((,class (:background ,background))))
-   `(linum ((,class (:background ,background :foreground ,bw04))))
+   `(cursor ((,class (:background ,aqua-bright))))
+   `(fringe ((,class (:background ,black))))
+   `(linum ((,class (:background ,black :foreground ,bw04))))
    `(border ((,class (:background ,current-line))))
+   `(vertical-border ((,class (:foreground ,yellow))))
    `(border-glyph ((,class (nil))))
    `(highlight ((,class (:inverse-video nil :background ,current-line))))
    `(gui-element ((,class (:background ,current-line :foreground ,foreground))))
    ;; TODO theme mode-line powerline way
-   ;; `(mode-line ((,class (:foreground ,bw02 :background ,yellow ))))
-   ;; `(mode-line-buffer-id ((,class (:foreground ,red :weight bold :background nil))))
-   ;; `(mode-line-inactive ((,class (:inherit mode-line
-   ;;                                         :foreground ,bw05
-   ;;                                         :background ,bw03 :weight normal))))
-   ;; `(mode-line-emphasis ((,class (:foreground ,foreground :slant italic))))
-   ;; `(mode-line-highlight ((,class (:foreground ,purple :box nil))))
+   `(mode-line ((,class (:foreground ,black :background ,yellow ))))
+   ;; `(mode-line-buffer-id ((,class (:foreground ,black :weight bold :background nil))))
+   `(mode-line-inactive ((,class (:inherit mode-line
+                                  :foreground ,yellow
+                                  :background ,bw03 :weight normal))))
+   `(mode-line-emphasis ((,class (:foreground ,black :slant italic))))
+   `(mode-line-highlight ((,class (:foreground ,purple :box nil))))
    `(minibuffer-prompt ((,class (:foreground ,blue))))
    `(region ((,class (:background ,selection))))
    `(secondary-selection ((,class (:background ,current-line))))
@@ -209,6 +212,10 @@
    `(whitespace-newline ((,class (:background nil :foreground ,selection))))
    `(whitespace-tab ((,class (:background nil :foreground ,selection))))
    `(whitespace-hspace ((,class (:background nil :foreground ,selection))))
+
+   ;; Powerline
+   `(powerline-active1 ((,class (:foreground ,bw03 :background ,yellow))))
+   `(powerline-active2 ((,class (:foreground ,foreground :background ,bw03))))
 
    ;; Parenthesis matching (built-in)
    `(show-paren-match-face ((,class (:background ,blue :foreground ,black))))
@@ -232,7 +239,7 @@
    `(slime-repl-input-face ((,class (:weight normal :underline nil))))
    `(slime-repl-prompt-face ((,class (:underline nil :weight bold :foreground ,purple))))
    `(slime-repl-result-face ((,class (:foreground ,green))))
-   `(slime-repl-output-face ((,class (:foreground ,blue :background ,background))))
+   `(slime-repl-output-face ((,class (:foreground ,blue :background ,black))))
 
    `(csv-separator-face ((,class (:foreground ,orange))))
 
@@ -244,6 +251,9 @@
    `(diff-hunk-header ((,class (:foreground ,purple))))
    `(diff-refine-added ((,class (:inherit diff-added :inverse-video t))))
    `(diff-refine-removed ((,class (:inherit diff-removed :inverse-video t))))
+   `(diff-hl-change ((,class (:foreground ,blue))))
+   `(diff-hl-delete ((,class (:inherit diff-removed :foreground ,red))))
+   `(diff-hl-insert ((,class (:inherit diff-added :foreground ,green))))
 
    `(ediff-even-diff-A ((,class (:foreground nil :background nil :inverse-video t))))
    `(ediff-even-diff-B ((,class (:foreground nil :background nil :inverse-video t))))
@@ -284,6 +294,28 @@
    `(diredp-read-priv ((,class (:foreground ,green :background nil))))
    `(diredp-symlink ((,class (:foreground ,purple))))
    `(diredp-write-priv ((,class (:foreground ,yellow :background nil))))
+
+   ;; helm
+   `(helm-M-x-key ((,class (:foreground ,orange :underline t))))
+   `(helm-bookmark-addressbook ((,class (:foreground ,red))))
+   `(helm-bookmark-file ((,class (:foreground ,blue))))
+   `(helm-bookmark-gnus ((,class (:foreground ,purple))))
+   `(helm-bookmark-info ((,class (:foreground ,green))))
+   `(helm-bookmark-man ((,class (:foreground ,brown))))
+   `(helm-bookmark-w3m ((,class (:foreground ,yellow))))
+   `(helm-buffer-saved-out ((,class (:background ,black :foreground ,red))))
+   `(helm-candidate-number ((,class (:background ,brown :foreground ,black))))
+   `(helm-ff-executable ((,class (:foreground ,green))))
+   `(helm-grep-file ((,class (:foreground ,purple :underline t))))
+   `(helm-grep-finish ((,class (:foreground ,green))))
+   `(helm-grep-lineno ((,class (:foreground ,brown))))
+   `(helm-grep-match ((,class (:foreground ,yellow))))
+   `(helm-match ((,class (:foreground ,yellow))))
+   `(helm-prefarg ((,class (:foreground ,green))))
+   `(helm-selection ((,class (:background ,bw02))))
+   `(helm-separator ((,class (:foreground ,red))))
+   `(helm-source-header ((,class (:foreground ,blue :underline t :weight bold))))
+   `(helm-visible-mark ((,class (:background ,green :foreground ,black))))
 
    ;; Magit (a patch is pending in magit to make these standard upstream)
    `(magit-branch ((,class (:foreground ,green))))
@@ -354,7 +386,7 @@
    `(org-ellipsis ((,class (:foreground ,comment))))
    `(org-footnote ((,class (:foreground ,aqua))))
    `(org-formula ((,class (:foreground ,red))))
-   `(org-hide ((,class (:foreground ,background :background ,background))))
+   `(org-hide ((,class (:foreground ,black :background ,black))))
    `(org-link ((,class (:foreground ,blue :underline t))))
    `(org-scheduled ((,class (:foreground ,green))))
    `(org-scheduled-previously ((,class (:foreground ,orange))))
@@ -446,10 +478,6 @@
    `(jabber-rare-time-face ((,class (:foreground ,comment))))
    `(jabber-activity-face ((,class (:foreground ,purple))))
    `(jabber-activity-personal-face ((,class (:foreground ,aqua))))
-
-   ;; Powerline
-   `(powerline-active1 ((t (:foreground ,foreground :background ,selection))))
-   `(powerline-active2 ((t (:foreground ,foreground :background ,current-line))))
 
    ;; Outline
    `(outline-1 ((,class (:inherit nil :foreground "SkyBlue1"))))
@@ -592,6 +620,12 @@
    `(custom-group-tag ((,class (:foreground ,blue))))
    `(custom-state ((,class (:foreground ,green))))
 
+   ;; neotree
+   `(neo-banner-face ((,class (:foreground ,bw03 :weight bold))))
+   `(neo-dir-link-face ((,class (:foreground ,blue))))
+   `(neo-expand-btn-face ((,class (:foreground ,blue))))
+   `(neo-root-dir-face ((,class (:foreground ,yellow :weight bold))))
+
    ;; ansi-term
    `(term ((,class (:foreground nil :background nil :inherit default))))
    `(term-color-black   ((,class (:foreground ,foreground :background ,foreground))))
@@ -601,7 +635,7 @@
    `(term-color-blue    ((,class (:foreground ,blue :background ,blue))))
    `(term-color-magenta ((,class (:foreground ,purple :background ,purple))))
    `(term-color-cyan    ((,class (:foreground ,aqua :background ,aqua))))
-   `(term-color-white   ((,class (:foreground ,background :background ,background)))))
+   `(term-color-white   ((,class (:foreground ,black :background ,black)))))
 
   (custom-theme-set-variables
    'afternoon
@@ -627,7 +661,7 @@
        (360 . ,green)))
    `(vc-annotate-very-old-color nil)
    `(vc-annotate-background nil)
-   `(ansi-color-names-vector (vector ,foreground ,red ,green ,yellow ,blue ,purple ,aqua ,background))
+   `(ansi-color-names-vector (vector ,foreground ,red ,green ,yellow ,blue ,purple ,aqua ,black))
    '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])))
 
 ;;;###autoload
